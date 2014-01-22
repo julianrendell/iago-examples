@@ -50,7 +50,9 @@ I've created a bash script that takes care of compiling, packaging, unzipping, s
 
 Example usage:
 
-`./scripts/run-iagomaven.sh $PWD examples nodebug 'examples-1.0.jar -f config/LinePrintingExample-config.scala'`
+```
+./scripts/run-iagomaven.sh $PWD examples nodebug 'examples-1.0.jar -f config/LinePrintingExample-config.scala'
+```
 
 # Examples
 
