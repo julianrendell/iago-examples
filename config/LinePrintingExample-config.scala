@@ -12,12 +12,12 @@ new ParrotLauncherConfig {
 
   jobName = "simpletextlines"
   port = 8081
-  victims = "www.google.com"
+  victims = "localhost"
 
   log = "../../simpletextlines.log"
-  requestRate = 10
-  duration = 10
-  timeUnit = "SECONDS"
+  requestRate = 1
+  duration = 1
+  timeUnit = "MINUTES"
   reuseFile = true
   localMode = true
 
@@ -25,7 +25,7 @@ new ParrotLauncherConfig {
   // doesn't seem to be supported, other than by using dynamically compiled code in the loadTest string.
 
   imports = """
-  import com.twitter.iago.examples.LinePrintingExample
+  import com.julianrendell.iago.examples.LinePrintingExample
   import org.jboss.netty.handler.codec.http.HttpResponse
   """
   responseType = "HttpResponse"

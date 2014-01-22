@@ -38,8 +38,9 @@ Hitting a breakpoint also seemed to cause death of the application. I've yet to 
     * maybe misnamed; looks like it's executed as part of the configuration of the `Ostrich` run-time environment
 * create a very simple, single request, blocking, version of Iago where everything is statically compiled- just to make it easier to debug new load tests.
 * add OS detection and enhance the script templating to support other startup scripts - eg windows
-* consider a patch that adds dynamic types to the `ParrotServerConfig` class so that test specific configuration can be included.
+* create a patch that adds dynamic types to the `ParrotServerConfig` class so that test specific configuration can be included.
     * right now you can embed custom code in the `loadTest` string but you don't get any help from the IDE (it's a string! ie it's the second layer down in the chain of dynamic compilation.)
+* Make a version of `ParrotService`/`ParrotRequest`/`RequestConsumer` etc that call back to user provided call-backs- so Iago could be used to drive non-TCP/IP load tests - trivial use case: console output example that is rate limited.
 
 # Utilities Created
 ## `run-iagomaven.sh` Script
@@ -58,10 +59,12 @@ The `LinePrintingExample` demonstrates a basic configuration for [Iago] which si
 It demonstrates:
 * how to set up a http based test
 * how to pass the configuration to the `loadtest` implementation
-* `Startup`, `ShutDown`
+* `start`, `shutdown`
 * collecting custom statistics
 
-One day it might become a reasonable template/starting point for 'real' tests.
+Note: the output rate is uncontrolled- the rate limiting is done by the `[RequestConsumer][https://github.com/twitter/iago/blob/master/src/main/scala/com/twitter/parrot/server/RequestConsumer.scala]` class, which we don't end up using in this example.
+
+One day this might become a reasonable template/starting point for 'real' tests.
 
 From the root directory compile and run via:
 
@@ -86,6 +89,20 @@ python manage.py  runserver
 It should output on the console which port it is running on.
 
 ### Example HTTP REST Load Test
+The `HttpExample` class implements a simple load test against [httpbin], featuring:
+- parsing a simple CSV input file
+- making http requests, including setting headers
+    - To do: setting query strings
+- checking the response, both status code, returned headers, and returned content
+- config file that sets a custom logger (Not working yet!), a slow-start-up request rate, and a few other example settings tweaks.
+
+To run:
+`./scripts/run-iagomaven.sh $PWD examples nodebug 'examples-1.0.jar -f config/HttpExample-config.scala'`
+
+*Note*
+There seems to be a bug in Iago that if there are any connection timeouts (and other errors?) then it never exits.
+[httpbin] seems to fail requests at pretty low levels- so I've found `pgrep -u <user> java` and then `pkill -u <user> java` after checking that I'm not going to close down other instances of java.
+
 
 
 [iago]:http://twitter.github.io/iago/

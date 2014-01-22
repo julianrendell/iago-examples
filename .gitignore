@@ -104,3 +104,7 @@ $RECYCLE.BIN/
 Session.vim
 .netrwhist
 *~
+
+# Other
+.classpath.txt
+

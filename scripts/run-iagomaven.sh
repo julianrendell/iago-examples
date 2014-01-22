@@ -45,7 +45,7 @@ echo "Moving to $BASE..."
 cd $BASE
 
 echo "Cleaning up any previous runs..."
-rm -rf "target/tmp"
+rm -rf "target"
 
 echo "Building..."
 
