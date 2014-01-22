@@ -60,6 +60,7 @@ Should be taken care of by the `pom.xml`/Maven.
 However [iago] is not (yet?) published to a Maven repository.
 
 So to be able to use these examples:
+
 1. checkout [iago from git][iago-git]
 2. `mvn install -DskipTests`
 
@@ -74,18 +75,20 @@ It demonstrates:
 * `start`, `shutdown`
 * collecting custom statistics
 
-Note: the output rate is uncontrolled- the rate limiting is done by the `[RequestConsumer][https://github.com/twitter/iago/blob/master/src/main/scala/com/twitter/parrot/server/RequestConsumer.scala]` class, which we don't end up using in this example.
+Note: the output rate is uncontrolled- the rate limiting is done by the [RequestConsumer](https://github.com/twitter/iago/blob/master/src/main/scala/com/twitter/parrot/server/RequestConsumer.scala) class, which we don't end up using in this example.
 
 One day this might become a reasonable template/starting point for 'real' tests.
 
 From the root directory compile and run via:
 
-`./scripts/run-iagomaven.sh $PWD examples nodebug 'examples-1.0.jar -f config/LinePrintingExample-config.scala'`
+```
+./scripts/run-iagomaven.sh $PWD examples nodebug 'examples-1.0.jar -f config/LinePrintingExample-config.scala'
+```
 
 ## HTTP Requests
 
 ### Installing a Test HTTP Service
-My colleague, @wilsohn, found this excellent tool for trying HTTP requests: [httpbin].
+My colleague, [wilsohn](https://github.com/wilsohn), found this excellent tool for trying HTTP requests: [httpbin].
 
 Install [httpbin] locally so there is no chance of accidental DOS attacks.
 
@@ -109,7 +112,10 @@ The `HttpExample` class implements a simple load test against [httpbin], featuri
 - config file that sets a custom logger (Not working yet!), a slow-start-up request rate, and a few other example settings tweaks.
 
 To run:
-`./scripts/run-iagomaven.sh $PWD examples nodebug 'examples-1.0.jar -f config/HttpExample-config.scala'`
+
+```
+./scripts/run-iagomaven.sh $PWD examples nodebug 'examples-1.0.jar -f config/HttpExample-config.scala'
+```
 
 *Note*
 There seems to be a bug in Iago that if there are any connection timeouts (and other errors?) then it never exits.
